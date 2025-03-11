@@ -1,0 +1,172 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+
+<!-- Hero Section -->
+<div class="about-hero">
+    <div class="container text-center">
+        <h1 class="text-white fw-bold animate__animated animate__fadeInDown">About Us</h1>
+        <p class="text-light animate__animated animate__fadeInUp">Learn more about our mission, values, and the team dedicated to making a difference.</p>
+    </div>
+    <div class="wave"></div>
+</div>
+
+<!-- Content Sections -->
+<section class="about-section">
+    <div class="section-content">
+        <h4><i class="fas fa-bullseye icon"></i> Our Mission</h4>
+        <p>
+            Our mission is to provide innovative solutions that empower businesses to thrive in a rapidly evolving digital world.
+            We strive to deliver excellence and create value for our clients, partners, and communities.
+        </p>
+    </div>
+</section>
+
+<section class="about-section bg-alternate">
+    <div class="section-content">
+        <h4><i class="fas fa-lightbulb icon"></i> Our Vision</h4>
+        <p>
+            We envision a future where technology enables people to achieve their full potential. Through cutting-edge solutions,
+            we aim to become a leader in driving digital transformation.
+        </p>
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="section-content">
+        <h4><i class="fas fa-users icon"></i> Our Team</h4>
+        <p>
+            Our diverse and talented team is committed to delivering exceptional results. We foster a collaborative environment
+            that encourages innovation, growth, and success.
+        </p>
+    </div>
+</section>
+
+<section class="about-section bg-alternate">
+    <div class="section-content">
+        <h4><i class="fas fa-award icon"></i> Our Core Values</h4>
+        <ul>
+            <li>Integrity and transparency in all we do.</li>
+            <li>Customer-centric approach with a focus on results.</li>
+            <li>Continuous learning and innovation.</li>
+            <li>Commitment to community and social responsibility.</li>
+        </ul>
+    </div>
+</section>
+
+<p class="text-center mt-4">
+    Want to learn more? Feel free to <a asp-controller="Home" asp-action="Contact">contact us</a> today!
+</p>
+
+@section Styles {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Hero Section */
+        .about-hero {
+            background: linear-gradient(to right, #f12711, #f5af19);
+            color: white;
+            padding: 100px 20px;
+            position: relative;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('https://svgshare.com/i/tkH.svg') no-repeat center;
+            background-size: cover;
+        }
+
+        /* Section styling */
+        .about-section {
+            width: 100%;
+            padding: 60px 0;
+        }
+
+        .section-content {
+            max-width: 900px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .bg-alternate {
+            background-color: #f4f4f9;
+        }
+
+        h4 {
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: #343a40;
+        }
+
+        p, ul {
+            font-size: 1.2rem;
+            color: #495057;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        .icon {
+            font-size: 2.4rem;
+            margin-right: 15px;
+            color: #007bff;
+        }
+
+        /* Link styles */
+        a {
+            color: #007bff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        /* Responsive adjustments */
+        @@media (max-width: 768px) {
+            h1
+
+        {
+            font-size: 2.5rem;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+        }
+
+        p, ul {
+            font-size: 1rem;
+        }
+
+        .about-section {
+            padding: 40px 15px;
+        }
+
+        }
+    </style>
+}

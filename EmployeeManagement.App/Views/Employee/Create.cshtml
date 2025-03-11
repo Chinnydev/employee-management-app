@@ -1,0 +1,209 @@
+﻿@model EmployeeManagement.App.Dtos.EmployeeCreateDto
+
+@{
+    ViewData["Title"] = "Create Employee";
+}
+
+<!-- Hero Section -->
+<div class="create-hero py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold text-white animate__animated animate__fadeInDown">Create Employee</h2>
+    </div>
+</div>
+
+<!-- Form Section -->
+<div class="container mt-5">
+    <form asp-action="Create" method="post" class="row g-4 needs-validation px-4 py-5 bg-light rounded-4 shadow-sm" novalidate>
+        <!-- First Name -->
+        <div class="col-md-6">
+            <label asp-for="FirstName" class="form-label">First Name</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input asp-for="FirstName" class="form-control" />
+            </div>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <!-- Last Name -->
+        <div class="col-md-6">
+            <label asp-for="LastName" class="form-label">Last Name</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input asp-for="LastName" class="form-control" />
+            </div>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-6">
+            <label asp-for="Email" class="form-label">Email</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input asp-for="Email" type="email" class="form-control" />
+            </div>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="col-md-6">
+            <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                <input asp-for="PhoneNumber" type="tel" class="form-control" />
+            </div>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-6">
+            <label asp-for="Address" class="form-label">Address</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                <input asp-for="Address" class="form-control" />
+            </div>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <!-- Position -->
+        <div class="col-md-6">
+            <label asp-for="Position" class="form-label">Position</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-briefcase"></i></span>
+                <input asp-for="Position" class="form-control" />
+            </div>
+            <span asp-validation-for="Position" class="text-danger"></span>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="col-md-6">
+            <label asp-for="DateOfBirth" class="form-label">Date of Birth</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                <input asp-for="DateOfBirth" type="date" class="form-control" />
+            </div>
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-12 text-center mt-4">
+            <button type="submit" class="btn btn-gradient btn-lg me-3">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <a asp-action="Index" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Styles {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Hero Section */
+        .create-hero {
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            color: white;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        /* Form Styles */
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .input-group-text {
+            background-color: #e9ecef;
+            border-right: none;
+        }
+
+        .form-control {
+            border-left: none;
+            box-shadow: none;
+            border-radius: 0 0.375rem 0.375rem 0;
+            transition: all 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #6610f2;
+                box-shadow: 0 0 0 0.2rem rgba(102, 16, 242, 0.25);
+            }
+
+        /* Button Styles */
+        .btn-gradient {
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-gradient:hover {
+                background: linear-gradient(135deg, #6610f2, #007bff);
+                transform: scale(1.05);
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+        .btn-lg {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 6px;
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 768px) {
+            h2
+
+        {
+            font-size: 2rem;
+        }
+
+        .btn-lg {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        }
+
+        @@media (max-width: 576px) {
+            h2
+
+        {
+            font-size: 1.75rem;
+        }
+
+        .btn-lg {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        }
+    </style>
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

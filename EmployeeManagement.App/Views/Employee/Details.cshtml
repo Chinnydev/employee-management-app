@@ -1,0 +1,172 @@
+﻿@model EmployeeManagement.App.Dtos.EmployeeReadDto
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<div class="details-hero py-5">
+    <div class="container text-center mb-4">
+        <h2 class="fw-bold text-white">Employee Details</h2>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <!-- Employee Details Section -->
+    <div class="row gy-4">
+        <div class="col-md-6 detail-item">
+            <p class="detail-label">
+                <i class="fas fa-user text-info"></i> <strong>First Name:</strong>
+            </p>
+            <p class="detail-value">@Model.FirstName</p>
+        </div>
+        <div class="col-md-6 detail-item">
+            <p class="detail-label">
+                <i class="fas fa-user text-info"></i> <strong>Last Name:</strong>
+            </p>
+            <p class="detail-value">@Model.LastName</p>
+        </div>
+        <div class="col-md-6 detail-item">
+            <p class="detail-label">
+                <i class="fas fa-envelope text-primary"></i> <strong>Email:</strong>
+            </p>
+            <p class="detail-value">@Model.Email</p>
+        </div>
+        <div class="col-md-6 detail-item">
+            <p class="detail-label">
+                <i class="fas fa-phone text-success"></i> <strong>Phone Number:</strong>
+            </p>
+            <p class="detail-value">@Model.PhoneNumber</p>
+        </div>
+        <div class="col-md-6 detail-item">
+            <p class="detail-label">
+                <i class="fas fa-map-marker-alt text-danger"></i> <strong>Address:</strong>
+            </p>
+            <p class="detail-value">@Model.Address</p>
+        </div>
+        <div class="col-md-6 detail-item">
+            <p class="detail-label">
+                <i class="fas fa-briefcase text-warning"></i> <strong>Position:</strong>
+            </p>
+            <p class="detail-value">@Model.Position</p>
+        </div>
+        <div class="col-md-6 detail-item">
+            <p class="detail-label">
+                <i class="fas fa-calendar-alt text-secondary"></i> <strong>Date of Birth:</strong>
+            </p>
+            <p class="detail-value">@Model.DateOfBirth.ToString("yyyy-MM-dd")</p>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-5">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-lg me-3">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        <a asp-action="Index" class="btn btn-secondary btn-lg">
+            <i class="fas fa-arrow-left"></i> Back to List
+        </a>
+    </div>
+</div>
+
+@section Styles {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Hero Section */
+        .details-hero {
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            color: white;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        /* Detail Item Styles */
+        .detail-item {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        .detail-value {
+            font-size: 1.2rem;
+            color: #343a40;
+            margin-top: 0;
+            font-weight: 500;
+        }
+
+        /* Button Styles */
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+            font-weight: 600;
+            border: none;
+        }
+
+            .btn-warning:hover {
+                background-color: #e0a800;
+                color: white;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: #fff;
+            font-weight: 600;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
+        .btn-lg {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 6px;
+        }
+
+        /* Responsive Layout */
+        @@media (max-width: 768px) {
+            .detail-value
+
+        {
+            font-size: 1rem;
+        }
+
+        .btn-lg {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        }
+
+        @@media (max-width: 576px) {
+            .detail-label
+
+        {
+            font-size: 0.9rem;
+        }
+
+        .detail-value {
+            font-size: 0.95rem;
+        }
+
+        .btn-lg {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        }
+    </style>
+}
+

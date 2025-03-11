@@ -1,0 +1,159 @@
+﻿@model IEnumerable<EmployeeManagement.App.Dtos.EmployeeReadDto>
+
+@{
+    ViewData["Title"] = "Employee Records";
+}
+
+<div class="page-header bg-primary text-white py-4 mb-4">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h1 class="m-0 fw-bold">Employee Records</h1>
+        <a asp-action="Create" class="btn btn-gradient btn-lg">
+            <i class="fas fa-user-plus me-2"></i> Add New Employee
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="table-responsive" style="overflow-x: auto;">
+        <table class="table table-hover table-responsive-md table-striped table-bordered shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col"><i class="fas fa-user"></i> First Name</th>
+                    <th scope="col"><i class="fas fa-user"></i> Last Name</th>
+                    <th scope="col"><i class="fas fa-envelope"></i> Email</th>
+                    <th scope="col"><i class="fas fa-phone"></i> Phone Number</th>
+                    <th scope="col"><i class="fas fa-briefcase"></i> Position</th>
+                    <th scope="col"><i class="fas map-marker-alt"></i> Address</th>
+                    <th scope="col"><i class="fas fa-map-marker"></i> Date of Birth</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in Model)
+                {
+                    <tr>
+                        <td>@employee.FirstName</td>
+                        <td>@employee.LastName</td>
+                        <td>@employee.Email</td>
+                        <td>@employee.PhoneNumber</td>
+                        <td>@employee.Position</td>
+                        <td>@employee.Address</td>
+                        <td>@employee.DateOfBirth.ToString("yyyy-MM-dd")</td>
+                        <td class="d-flex gap-2 justify-content-center">
+                            <a class="btn btn-info btn-sm btn-action" asp-action="Details" asp-route-id="@employee.Id" title="View Details">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a class="btn btn-warning btn-sm btn-action" asp-action="Edit" asp-route-id="@employee.Id" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="btn btn-danger btn-sm btn-action" asp-action="Delete" asp-route-id="@employee.Id" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Styles {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #007bff, #6610f2);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #6610f2, #007bff);
+            transform: scale(1.05);
+        }
+
+        table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f3f3f3;
+        }
+
+        tr:hover {
+            background-color: #d9ecff;
+        }
+
+        .btn-action {
+            color: white;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-info:hover {
+            background-color: #0d6efd;
+        }
+
+        .btn-warning:hover {
+            background-color: #ffc107;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc3545;
+        }
+
+        .gap-2 > * {
+            margin-right: 0.5rem;
+        }
+
+        /* Responsive adjustments */
+        @@media (max-width: 768px) {
+            table {
+                font-size: 0.9rem;
+            }
+            .btn-action {
+                padding: 6px 10px;
+            }
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            th:nth-child(4),
+            td:nth-child(4),
+            th:nth-child(6),
+            td:nth-child(6) {
+                display: none;
+            }
+            .btn-action {
+                padding: 5px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+}
