@@ -38,7 +38,7 @@ stages:
       displayName: "Restore NuGet Packages"
       inputs:
         command: "restore"
-        restoreSolution: '$(solution)' 
+        restoreSolution: '$(solution)' # Create a variable in the variable group
     - task: VSBuild@1
       displayName: "Build Solution"
       inputs:
