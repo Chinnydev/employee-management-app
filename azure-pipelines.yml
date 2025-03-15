@@ -3,7 +3,7 @@ trigger:
     include:
       - main  # Change this to your default branch      
 variables:
-- group: bliss-variable-group  # Change this to your own variable group
+- group: bliss-variable-group
 stages:
 - stage: Build
   displayName: "Build Stage"
@@ -22,13 +22,13 @@ stages:
       inputs:
         command: "custom"
         custom: "tool"
-        arguments: "install --global dotnet-ef"
+        arguments: "install --global dotnet-ef --version 9.0.1"
     # Prepare SonarCloud Analysis
     - task: SonarCloudPrepare@2
       displayName: "Prepare SonarCloud Analysis"
       inputs:
         SonarCloud: "employee-management-app-sonarqube-connection"  
-        organization: "devflow-blacktech-project"
+        organization: "devflow-blacktech-project" 
         scannerMode: "MSBuild"
         projectKey: "DevFlow-BlackTech-Project_devflow-employee-management-app-group3"
         projectName: "devflow-employee-management-app-group3"
@@ -38,34 +38,43 @@ stages:
       displayName: "Restore NuGet Packages"
       inputs:
         command: "restore"
-        restoreSolution: '$(solution)' # Create a variable in the variable group
+        restoreSolution: '$(solution)'
     - task: VSBuild@1
       displayName: "Build Solution"
       inputs:
-        solution: "$(solution)" # Create a variable in the variable group
-        platform: "$(buildPlatform)" # Create a variable in the variable group
-        configuration: "$(buildConfiguration)" # Create a variable in the variable group
+        solution: "$(solution)"
+        platform: "$(buildPlatform)"
+        configuration: "$(buildConfiguration)"
     # Run SonarCloud Analysis
     - task: SonarCloudAnalyze@2
       displayName: "Run SonarCloud Analysis"    
     - task: VSBuild@1
       displayName: "Publish Web Application"
       inputs:
-        solution: '$(solution)' # Create a variable in the variable group
+        solution: '$(solution)'
         msbuildArgs: /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:publishUrl="$(Agent.TempDirectory)\WebAppContent\\"
-        platform: '$(buildPlatform)' # Create a variable in the variable group
-        configuration: '$(buildConfiguration)'  # Create a variable in the variable group 
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'  
+    
+    - task: DotNetCoreCLI@2
+      displayName: "Run Database Migrations"
+      inputs:
+        azureSubscription: "$(serviceConnection)"
+        command: "custom"
+        custom: "ef"
+        arguments: "database update --project $(migrationProjectPath)"
+
     - task: ArchiveFiles@2
       displayName: Archive Files
       inputs:
-          rootFolderOrFile: $(Agent.TempDirectory)\WebAppContent 
+          rootFolderOrFile: $(Agent.TempDirectory)\WebAppContent
           includeRootFolder: false
-          archiveFile: "$(Build.ArtifactStagingDirectory)/WebApp.zip" 
+          archiveFile: "$(Build.ArtifactStagingDirectory)/WebApp.zip"
 
     - task: PublishPipelineArtifact@1
       displayName: "Publish Build Artifacts"
       inputs:
-        targetPath: "$(Build.ArtifactStagingDirectory)/WebApp.zip" 
+        targetPath: "$(Build.ArtifactStagingDirectory)/WebApp.zip"
         artifact: 'techIntegrationartifact'  
     
 
@@ -89,22 +98,12 @@ stages:
               buildType: 'current'
               downloadType: 'single'
               artifactName: 'techIntegrationartifact'
-              downloadPath: '$(System.ArtifactsDirectory)' 
+              downloadPath: '$(System.ArtifactsDirectory)'
           - task: AzureWebApp@1
             displayName: "Deploy to Azure App Service"
             inputs:
-              azureSubscription: "$(serviceConnection)" 
+              azureSubscription: "$(serviceConnection)"
               appType: "webApp"
               appName: "$(webAppName)"
               package: "$(Pipeline.Workspace)/techIntegrationartifact/WebApp.zip"
               deploymentMethod: "auto"
-  
-          # - task: DotNetCoreCLI@2
-          #   displayName: "Run Database Migrations"
-          #   inputs:
-          #     azureSubscription: "$(serviceConnection)"
-          #     command: "custom"
-          #     custom: "ef"
-          #     arguments: "database update --project EmployeeManagement.App/EmployeeManagement.App.csproj"
-          #     workingDirectory: "$(System.DefaultWorkingDirectory)/EmployeeManagement.App"
-
