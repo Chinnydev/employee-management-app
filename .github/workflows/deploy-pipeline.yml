@@ -36,8 +36,8 @@ jobs:
         with:
           projectBaseDir: .
           args: >
-            -Dsonar.organization=devflow-blacktech-project
-            -Dsonar.projectKey=DevFlow-BlackTech-Project_devflow-employee-management-app-group3
+            -Dsonar.organization=Chinnydev
+            -Dsonar.projectKey=employee-management-app
             -Dsonar.sources=.
 
       - name: Build Solution
