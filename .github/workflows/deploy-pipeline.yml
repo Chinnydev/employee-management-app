@@ -1,0 +1,111 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKER_IMAGE: ${{ secrets.SONAR_TOKEN }}/emp-mgt-app
+  IMAGE_TAG: latest
+  AWS_REGION: us-east-2
+  EKS_CLUSTER: emp-eks-cluster
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET and MSBuild
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.1'  # Change this based on your app's framework
+
+      - name: Install EF Core Tools
+        run: dotnet tool install --global dotnet-ef --version 9.0.1
+
+      - name: Restore NuGet Packages
+        run: dotnet restore
+
+      - name: Prepare SonarQube Analysis
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=devflow-blacktech-project
+            -Dsonar.projectKey=DevFlow-BlackTech-Project_devflow-employee-management-app-group3
+            -Dsonar.sources=.
+
+      - name: Build Solution
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Run SonarCloud Analysis
+        run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+
+      - name: Run Database Migrations
+        run: dotnet ef database update --project src/MyProject.csproj
+
+      - name: Archive Web App
+        run: zip -r WebApp.zip .
+
+      - name: Publish Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: webapp-artifact
+          path: WebApp.zip
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t $DOCKER_IMAGE:$IMAGE_TAG .
+          docker push $DOCKER_IMAGE:$IMAGE_TAG
+
+  terraform:
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS CLI
+        run: aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER
+
+      - name: Deploy to Kubernetes with ArgoCD
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
