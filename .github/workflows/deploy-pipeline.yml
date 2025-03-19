@@ -57,6 +57,11 @@ jobs:
         with:
           name: webapp-artifact
           path: WebApp.zip
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: webapp-artifact
+          path: ./artifact
 
   docker:
     runs-on: ubuntu-latest
