@@ -37,7 +37,7 @@ jobs:
           projectBaseDir: .
           args: >
             -Dsonar.organization=Chinnydev
-            -Dsonar.projectKey=employee-management-app
+            -Dsonar.projectKey=Chinnydev_employee-management-app
             -Dsonar.sources=.
 
       - name: Build Solution
