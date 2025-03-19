@@ -21,10 +21,10 @@ jobs:
       - name: Setup .NET and MSBuild
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0'  # Change this based on your app's framework
+          dotnet-version: '9.0'  # Change this based on your app's framework
 
       - name: Install EF Core Tools
-        run: dotnet tool install --global dotnet-ef --version 6.0.1
+        run: dotnet tool install --global dotnet-ef --version 9.0.1
 
       - name: Restore NuGet Packages
         run: dotnet restore
