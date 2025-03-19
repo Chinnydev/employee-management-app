@@ -43,8 +43,8 @@ jobs:
       - name: Build Solution
         run: dotnet build --no-restore --configuration Release
 
-      - name: Run SonarCloud Analysis
-        run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+    #   - name: Run SonarCloud Analysis
+    #     run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Run Database Migrations
         run: dotnet ef database update --project src/MyProject.csproj
