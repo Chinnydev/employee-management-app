@@ -47,7 +47,7 @@ jobs:
     #     run: dotnet sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Run Database Migrations
-        run: dotnet ef database update --project EmployeeManagement.App.csproj
+        run: dotnet ef database update --project EmployeeManagement.App/EmployeeManagement.App.csproj
 
       - name: Archive Web App
         run: zip -r WebApp.zip .
