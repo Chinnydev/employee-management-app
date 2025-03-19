@@ -52,13 +52,13 @@ jobs:
       - name: Archive Web App
         run: zip -r WebApp.zip .
 
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: webapp-artifact
-          path: ./artifact
+    #   - name: Download Build Artifact
+    #     uses: actions/download-artifact@v3
+    #     with:
+    #       name: webapp-artifact
+    #       path: ./artifact
       - name: Publish Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.1
         with:
           name: webapp-artifact
           path: WebApp.zip
